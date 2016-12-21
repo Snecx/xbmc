@@ -1071,6 +1071,7 @@ void CApplication::CreateUserDirs() const
   CDirectory::Create("special://home/");
   CDirectory::Create("special://home/addons");
   CDirectory::Create("special://home/addons/packages");
+  CDirectory::Create("special://home/addons/temp");
   CDirectory::Create("special://home/media");
   CDirectory::Create("special://home/system");
   CDirectory::Create("special://masterprofile/");
@@ -1347,6 +1348,7 @@ void CApplication::StopPVRManager()
     StopPlaying();
   // stop pvr manager thread and clear all pvr data
   g_PVRManager.Stop();
+  g_PVRManager.Clear();
   // stop epg container thread and clear all epg data
   g_EpgContainer.Stop();
   g_EpgContainer.Clear();
