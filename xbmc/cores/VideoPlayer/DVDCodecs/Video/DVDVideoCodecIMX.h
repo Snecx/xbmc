@@ -114,6 +114,7 @@ public:
   // Blitter configuration
   bool IsDoubleRate() const { return m_currentFieldFmt & IPU_DEINTERLACE_RATE_EN; }
 
+  bool IsZoomAllowed() const { return m_zoomAllowed; }
   void SetProcessInfo(CProcessInfo *m_pProcessInfo);
 
   void SetIPUMotion(EINTERLACEMETHOD imethod);
@@ -167,6 +168,7 @@ private:
   void PrepareTask(IPUTaskPtr &ipu, CRect srcRect, CRect dstRect);
   bool DoTask(IPUTaskPtr &ipu, CRect *dest = nullptr);
   bool TileTask(IPUTaskPtr &ipu);
+  int  CheckTask(IPUTaskPtr &ipu);
 
   void SetFieldData(uint8_t fieldFmt, double fps);
 
@@ -198,6 +200,7 @@ private:
   CProcessInfo                  *m_processInfo;
   ipu_motion_sel                 m_motion;
 
+  bool                           m_zoomAllowed;
   CCriticalSection               m_pageSwapLock;
 public:
   void                          *m_g2dHandle;
@@ -365,6 +368,7 @@ protected:
   VpuDecInputType              m_drainMode;
   int                          m_dropped;
   bool                         m_dropRequest;
+  bool                         m_rebuffer;
 
   std::vector<VpuFrameBuffer>  m_vpuFrameBuffers;   // Table of VPU frame buffers description
   std::unordered_map<VpuFrameBuffer*,double>
@@ -410,6 +414,7 @@ private:
   bool                         IsCurrentThread() const;
 
   CCriticalSection             m_openLock;
+  std::atomic<unsigned char>   m_nrOut;
 };
 
 
