@@ -105,7 +105,7 @@ list(APPEND DEPLIBS ${CMAKE_THREAD_LIBS_INIT})
 
 # Required dependencies
 set(required_deps DSExternals DirectX Sqlite3 FreeType PCRE Cpluff LibDvd
-                  TinyXML Python Yajl
+                  TinyXML Python Yajl Cdio
                   Lzo2 Fribidi TagLib FFMPEG CrossGUID)
 if(NOT WIN32)
   list(APPEND required_deps ZLIB)
@@ -173,7 +173,6 @@ endif()
 
 if(ENABLE_OPTICAL)
   list(APPEND DEP_DEFINES -DHAS_DVD_DRIVE)
-  core_require_dep(Cdio)
 endif()
 
 if(ENABLE_LIRC)
